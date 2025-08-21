@@ -2,36 +2,98 @@
 
 A simple project that focuses on learning how to use Docker inside a Laravel project.
 
-## How to stop all running Docker containers
+## Docker basic commands
+
+### Stop all running  Docker containers
 
 ```shell
 docker ps -q | xargs -r docker kill
 ```
 
-## How to delete all Docker containers
+### Delete all Docker containers
 
 ```shell
 docker ps -aq | xargs -r docker rm -vf
 ```
 
-## How to delete all Docker images
+### Delete all Docker images
 
 ```shell
 docker images -aq | xargs -r docker rmi -f
 ```
 
-## How to delete (almost) everything from Docker
+### Delete all Docker volumes
+
+```shell
+docker volume ls -q --filter dangling=true | xargs -r docker volume rm
+```
+
+### Delete (almost) everything
 
 ```shell
 docker system prune -a --volumes
 ```
 
-## How to download Docker image from registry
+### Download Docker image from registry
 
 Pulling `ubuntu` image from Docker Hub
 
 ```shell
 docker pull ubuntu
+```
+
+### Build Docker image from Dockerfile in the current directory
+
+```shell
+docker build .
+```
+
+### Authenticate Docker
+
+```shell
+docker login
+```
+
+### Give Docker image a new name
+
+```shell
+docker tag image-name username/image-name
+```
+
+### Push Docker image to Docker Hub
+
+```shell
+docker push username/image-name
+```
+
+### Pull Docker image from Docker Hub
+
+```shell
+docker pull username/image-name
+```
+
+### Create a new Docker volume
+
+```shell
+docker volume create volume-name
+```
+
+### Start a container with a volume mount
+
+```shell
+docker run --mount type=volume,src=volume-name,target=/path/on/the/container image-name
+```
+
+### Start a container with a bind mount
+
+```shell
+docker run --mount type=bind,src=.path/to/data/on/host/filesystem,target=/path/on/the/container image-name
+```
+
+### Check information about a Docker volume
+
+```shell
+docker volume inspect todo-db
 ```
 
 ## Dockerfile file structure
@@ -207,3 +269,27 @@ COPY ./src /usr/src/things
 # Copy files into the directory
 COPY file1.txt file2.txt /usr/src/things/
 ```
+
+### EXPOSE
+
+```Dockerfile
+EXPOSE <port> [<port>/<protocol>...]
+```
+
+The `EXPOSE` instruction informs Docker that the container listens on the specified network ports at runtime. You can specify whether the port listens on TCP or UDP, and the default is TCP if you don't specify a protocol.
+
+Regardless of the `EXPOSE` settings, you can override them at runtime by using the -p flag. For example
+
+```shell
+docker run -p 80:80/tcp -p 80:80/udp ...
+```
+
+## Docker volumes
+
+Volumes provide the ability to connect specific filesystem paths of the container back to the host machine. If you mount a directory in the container, changes in that directory are also seen on the host machine. If you mount that same directory across container restarts, you'd see the same files.
+
+There are two main types of volumes: volume mounts and bind mounts.
+
+Volume mounts allow to persist data on the specified directory in the container. When you exit the container, all changes get lost. However when you specify a volume mount, the files in the specified directory will stay saved. Then when you run the container again, these files will be there still.
+
+Bind mounts allow the container to access a specified directory on hosts filesystem. For example you can bind mount source code of your application and the container will see all changes to these files immediately after saving them.
