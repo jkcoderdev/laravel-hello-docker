@@ -96,6 +96,30 @@ docker run --mount type=bind,src=.path/to/data/on/host/filesystem,target=/path/o
 docker volume inspect todo-db
 ```
 
+### Create a new Docker network
+
+```shell
+docker network create network-name
+```
+
+### Run the application stack
+
+```shell
+docker compose up -d
+```
+
+### Stop the application stack
+
+```shell
+docker compose down
+```
+
+### Show Docker Compose logs
+
+```shell
+docker compose logs -f
+```
+
 ## Dockerfile file structure
 
 Docker can build images automatically by reading the instructions from a Dockerfile. A Dockerfile is a text document that contains all the commands a user could call on the command line to assemble an image.
@@ -293,3 +317,5 @@ There are two main types of volumes: volume mounts and bind mounts.
 Volume mounts allow to persist data on the specified directory in the container. When you exit the container, all changes get lost. However when you specify a volume mount, the files in the specified directory will stay saved. Then when you run the container again, these files will be there still.
 
 Bind mounts allow the container to access a specified directory on hosts filesystem. For example you can bind mount source code of your application and the container will see all changes to these files immediately after saving them.
+
+## Docker Compose
