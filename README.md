@@ -285,6 +285,21 @@ COPY [OPTIONS] ["<src>", ... "<dest>"]
 
 The `COPY` instruction copies new files or directories from `<src>` and adds them to the filesystem of the image in the `<dest>` directory path. Files and directories can be copied from the build context, build stage, named context, or an image.
 
+You can also copy files from a different stage using the `--from` option. Example use case:
+
+```Dockerfile
+FROM node:lts AS build
+WORKDIR /app
+COPY package* yarn.lock ./
+RUN yarn install
+COPY public ./public
+COPY src ./src
+RUN yarn run build
+
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+```
+
 **Examples:**
 
 ```Dockerfile
