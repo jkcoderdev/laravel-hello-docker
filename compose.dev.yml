@@ -1,0 +1,41 @@
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: ./docker/dev/Dockerfile
+    environment:
+      PHP_VERSION: 8.3
+      NODE_VERSION: 24
+    volumes:
+      - ./:/var/www
+    ports:
+      - 5173:5173
+      - 8000:8000
+  
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 3307:3306
+    volumes:
+      - database-data:/var/lib/mysql
+  
+  phpmyadmin:
+    image: phpmyadmin:latest
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: ${DB_USERNAME}
+      PMA_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 8080:80
+    depends_on:
+      - mysql
+
+volumes:
+  database-data:
