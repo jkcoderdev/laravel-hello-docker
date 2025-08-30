@@ -26,6 +26,12 @@ If you want to, you can access the dedicated terminal with npm, composer, php. H
 docker compose -f compose.dev.yml exec app bash
 ```
 
+Stop and remove docker containers:
+
+```shell
+docker compose -f compose.dev.yml down
+```
+
 ## Useful resources
 
 - https://docs.docker.com/get-started/workshop/
