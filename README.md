@@ -2,6 +2,37 @@
 
 A simple project that focuses on learning how to use Docker inside a Laravel project.
 
+All Docker and setup related files:
+- `setup-development.sh`, `setup-docker.sh`
+- `compose.dev.yml`, `compose.prod.yml`
+- `.dockerignore`
+- all files in `docker/` directory
+Feel free to analyse and use them.
+
+## Project setup
+
+### Development
+
+You need to have Docker installed. If you use Windows, you need to use WSL (Windows Subsystem for Linux).
+
+```shell
+chmod +x setup-development.sh
+./setup-development.sh
+```
+
+If you want to, you can access the dedicated terminal with npm, composer, php. Here's how:
+
+```shell
+docker compose -f compose.dev.yml exec app bash
+```
+
+## Useful resources
+
+- https://docs.docker.com/get-started/workshop/
+- https://docs.docker.com/reference/compose-file/build/
+- https://docs.docker.com/reference/dockerfile/
+- https://docs.docker.com/guides/frameworks/laravel/
+
 ## Docker basic commands
 
 ### Stop all running  Docker containers
@@ -332,5 +363,3 @@ There are two main types of volumes: volume mounts and bind mounts.
 Volume mounts allow to persist data on the specified directory in the container. When you exit the container, all changes get lost. However when you specify a volume mount, the files in the specified directory will stay saved. Then when you run the container again, these files will be there still.
 
 Bind mounts allow the container to access a specified directory on hosts filesystem. For example you can bind mount source code of your application and the container will see all changes to these files immediately after saving them.
-
-## Docker Compose
