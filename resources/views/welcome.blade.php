@@ -4,6 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
         <title>{{ config('app.name') }}</title>
 
         <!-- Fonts -->
@@ -19,6 +21,9 @@
         <div class="container">
             <h1>Hello Docker</h1>
             <p>This project runs in a docker container</p>
+            <small>
+                <a href="https://www.flaticon.com/free-icons/docker" target="_blank" title="docker icons">Docker icons created by Freepik - Flaticon</a>
+            </small>
         </div>
     </body>
 </html>
