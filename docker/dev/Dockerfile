@@ -3,8 +3,6 @@ ARG PHP_VERSION=8.3
 FROM php:${PHP_VERSION}-apache
 
 ARG NODE_VERSION=24
-ARG UID=1000
-ARG GID=1000
 
 WORKDIR /var/www
 
@@ -29,6 +27,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     soap \
     && apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN export NVM_DIR="$HOME/.nvm" && \
@@ -54,4 +53,4 @@ EXPOSE 80
 EXPOSE 5173
 
 ENTRYPOINT []
-CMD ["/usr/bin/supervisord", "-n"]
+CMD [ "/usr/bin/supervisord", "-n" ]
