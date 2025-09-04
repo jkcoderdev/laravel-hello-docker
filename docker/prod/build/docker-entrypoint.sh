@@ -15,22 +15,34 @@ rsync -av \
     --exclude ".*ignore" \
     --exclude ".gitattributes" \
     --exclude ".editorconfig" \
+    --exclude "compose.*.yml" \
     /src/ /out/
 
 composer install --no-dev --optimize-autoloader --no-interaction
-npm ci --omit=dev
+npm install --include=dev
 npm run build
+
+rm -rf node_modules
+
+npm install --omit=dev
 
 if [ ! -e .env ]; then
     cp .env.example .env
-    php artisan key:generate
 fi
 
-php artisan config:cache --no-ansi --quiet
-php artisan route:cache --no-ansi --quiet
-php artisan view:cache --no-ansi --quiet
+php artisan key:generate
+
+php artisan config:clear --no-ansi --quiet
+php artisan route:clear --no-ansi --quiet
+php artisan view:clear --no-ansi --quiet
+php artisan cache:clear --no-ansi --quiet
+
+composer dump-autoload --optimize --no-interaction
 
 rm -f artisan
 rm -f .env.example
+
+chmod -R 777 storage
+chmod -R 777 bootstrap/cache
 
 exec "$@"
