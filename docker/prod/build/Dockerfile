@@ -39,4 +39,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends rsync
 COPY ./docker/prod/build/docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 
+RUN rm -rf /out/* && mkdir -p /out
+
+COPY ./docker/prod/build/.htaccess /out/
+
 ENTRYPOINT [ "/docker-entrypoint.sh" ]

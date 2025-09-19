@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# Stops the execution of a script if a command or pipeline has an error
-set -e
-
-rm -rf /out/*
-mkdir -p /out
-
 rsync -av \
     --exclude-from="/src/.gitignore" \
     --exclude ".git/" \
@@ -18,7 +12,9 @@ rsync -av \
     --exclude "compose.*.yml" \
     /src/ /out/
 
-composer install --no-dev --optimize-autoloader --no-interaction
+composer install
+# composer install --optimize-autoloader --no-interaction
+# composer install --no-dev --optimize-autoloader --no-interaction
 npm install --include=dev
 npm run build
 
@@ -39,7 +35,7 @@ php artisan cache:clear --no-ansi --quiet
 
 composer dump-autoload --optimize --no-interaction
 
-rm -f artisan
+# rm -f artisan
 rm -f .env.example
 
 chmod -R 777 storage

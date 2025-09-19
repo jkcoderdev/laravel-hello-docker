@@ -10,6 +10,17 @@ services:
     volumes:
       - ./:/src
       - ./dist:/out
+  
+  artisan:
+    container_name: artisan
+    build:
+      context: .
+      dockerfile: ./docker/prod/artisan/Dockerfile
+    volumes:
+      - ./dist:/var/www
+    depends_on:
+      - mysql
+  
   server:
     container_name: server
     build:
@@ -17,8 +28,6 @@ services:
       dockerfile: ./docker/prod/server/Dockerfile
     environment:
       PHP_VERSION: 8.3
-    volumes:
-      - ./dist:/var/www
     ports:
       - "8000:80"
   

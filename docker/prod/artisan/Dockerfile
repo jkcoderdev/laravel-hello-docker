@@ -1,6 +1,6 @@
 ARG PHP_VERSION=8.3
 
-FROM php:${PHP_VERSION}-apache
+FROM php:${PHP_VERSION}-cli
 
 WORKDIR /var/www
 
@@ -25,15 +25,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     soap \
     && apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN a2enmod rewrite
+ENV COMPOSER_ALLOW_SUPERUSER=1
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-COPY ./docker/prod/server/vhost.conf /etc/apache2/sites-available/000-default.conf
-
-COPY ./dist /var/www/
-
-RUN chown -R 33:33 /var/www && chmod -R u+rwX,g+rwX /var/www
-
-EXPOSE 80
-
-ENTRYPOINT []
-CMD [ "apache2-foreground" ]
+ENTRYPOINT ["php", "artisan"]

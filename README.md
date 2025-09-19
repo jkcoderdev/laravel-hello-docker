@@ -11,9 +11,9 @@ Feel free to analyse and use them.
 
 ## Project setup
 
-### Development
-
 You need to have Docker installed. If you use Windows, you need to use WSL (Windows Subsystem for Linux).
+
+### Development
 
 ```shell
 chmod +x setup-development.sh
@@ -30,6 +30,19 @@ Stop and remove docker containers:
 
 ```shell
 docker compose -f compose.dev.yml down
+```
+
+### Production
+
+```shell
+chmod +x setup-production.sh
+./setup-production.sh
+```
+
+Stop and remove docker containers:
+
+```shell
+docker compose -f compose.prod.yml down
 ```
 
 ## Useful resources
