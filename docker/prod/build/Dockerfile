@@ -41,6 +41,4 @@ RUN chmod +x /docker-entrypoint.sh
 
 RUN rm -rf /out/* && mkdir -p /out
 
-COPY ./docker/prod/build/.htaccess /out/
-
 ENTRYPOINT [ "/docker-entrypoint.sh" ]

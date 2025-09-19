@@ -12,6 +12,8 @@ rsync -av \
     --exclude "compose.*.yml" \
     /src/ /out/
 
+cp /src/docker/prod/build/.htaccess /out/.htaccess
+
 composer install
 # composer install --optimize-autoloader --no-interaction
 # composer install --no-dev --optimize-autoloader --no-interaction
