@@ -11,6 +11,7 @@ storage/logs/*
 storage/app/*
 storage/temp/*
 vendor/
+dist/
 bootstrap/cache
 !bootstrap/cache/.gitignore
 .dockerignore
@@ -19,6 +20,8 @@ bootstrap/cache
 Dockerfile
 _ide_helper.php
 docker-compose.yml
+compose.dev.yml
+compose.prod.yml
 Makefile
 .drone.yml
 .env.default

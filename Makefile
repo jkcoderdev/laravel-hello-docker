@@ -10,14 +10,16 @@ down:
 	$(DEV_COMPOSE) down
 	$(PROD_COMPOSE) down
 
-dev-up:
-	$(DEV_COMPOSE) up -d --build
-
 dev-down:
 	$(DEV_COMPOSE) down
 
-prod-build:
-	$(PROD_COMPOSE) run --rm build
-
 prod-down:
 	$(PROD_COMPOSE) down
+
+dev:
+	$(DEV_COMPOSE) up -d --build
+
+build:
+	mkdir -p ./dist
+	$(PROD_COMPOSE) run --build --rm builder sh -c "ls -l /out"
+	docker run --rm -v laravel-hello-docker_build-artifact:/src -v $(PWD)/dist:/dest alpine sh -c "cp -r /src/. /dest/"

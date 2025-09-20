@@ -1,36 +1,14 @@
 services:
-  build:
-    container_name: build
+  builder:
     build:
       context: .
       dockerfile: ./docker/prod/build/Dockerfile
+      target: artifact
     environment:
       PHP_VERSION: 8.3
       NODE_VERSION: 24
     volumes:
-      - ./:/src
-      - ./dist:/out
-  
-  artisan:
-    container_name: artisan
-    build:
-      context: .
-      dockerfile: ./docker/prod/artisan/Dockerfile
-    volumes:
-      - ./dist:/var/www
-    depends_on:
-      mysql:
-        condition: service_healthy
-  
-  server:
-    container_name: server
-    build:
-      context: .
-      dockerfile: ./docker/prod/server/Dockerfile
-    environment:
-      PHP_VERSION: 8.3
-    ports:
-      - "8000:80"
+      - build-artifact:/out
   
   mysql:
     image: mysql:latest
@@ -39,8 +17,6 @@ services:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - 3307:3306
     volumes:
       - database-data:/var/lib/mysql
     healthcheck:
@@ -57,9 +33,23 @@ services:
       PMA_USER: ${DB_USERNAME}
       PMA_PASSWORD: ${DB_PASSWORD}
     ports:
-      - 8080:80
+      - "8080:80"
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
+  
+  testserver:
+    build:
+      context: .
+      dockerfile: ./docker/prod/server/Dockerfile
+    environment:
+      PHP_VERSION: 8.3
+    ports:
+      - "8000:80"
+    depends_on:
+      mysql:
+        condition: service_healthy
 
 volumes:
   database-data:
+  build-artifact:

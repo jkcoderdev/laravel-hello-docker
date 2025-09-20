@@ -29,8 +29,6 @@ RUN a2enmod rewrite
 
 COPY ./docker/prod/server/vhost.conf /etc/apache2/sites-available/000-default.conf
 
-COPY ./dist /var/www/
-
 RUN chown -R 33:33 /var/www && chmod -R u+rwX,g+rwX /var/www
 
 EXPOSE 80
