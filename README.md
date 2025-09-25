@@ -3,11 +3,13 @@
 A simple project that focuses on learning how to use Docker inside a Laravel project.
 
 All Docker and setup related files:
-- `setup-development.sh`, `setup-docker.sh`
+- `Makefile`
+- `setup-docker.sh`
 - `compose.dev.yml`, `compose.prod.yml`
 - `.dockerignore`
 - all files in `docker/` directory
-Feel free to analyse and use them.
+
+Feel free to use and learn from them.
 
 ## Project setup
 
@@ -15,34 +17,56 @@ You need to have Docker installed. If you use Windows, you need to use WSL (Wind
 
 ### Development
 
+Running a development server:
+
 ```shell
-chmod +x setup-development.sh
-./setup-development.sh
+make dev
 ```
 
-If you want to, you can access the dedicated terminal with npm, composer, php. Here's how:
+Accessing the dedicated terminal with npm, composer, php:
 
 ```shell
 docker compose -f compose.dev.yml exec app bash
 ```
 
-Stop and remove docker containers:
+Stop the development environment:
 
 ```shell
-docker compose -f compose.dev.yml down
+make dev-down
 ```
 
 ### Production
 
+Build production-ready files in the `dist` folder:
+
 ```shell
-chmod +x setup-production.sh
-./setup-production.sh
+make build
 ```
 
-Stop and remove docker containers:
+Run a testserver:
 
 ```shell
-docker compose -f compose.prod.yml down
+make testserver
+```
+
+Stop the production environment:
+
+```shell
+make prod-down
+```
+
+## Other
+
+Stop all docker containers:
+
+```shell
+make down
+```
+
+Show all make commands:
+
+```shell
+make help
 ```
 
 ## Useful resources
