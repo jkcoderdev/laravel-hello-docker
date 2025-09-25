@@ -57,7 +57,7 @@ RUN rm -f phpunit.xml \
   && rm -f vite.config.js \
   && rm -f *.sh \
   && rm -f README.md \
-  && rm -f artisan \
+  && rm -f public/hot \
   && rm -rf tests \
   && rm -rf node_modules \
   && rm -rf docker

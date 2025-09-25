@@ -24,3 +24,9 @@ build:
 	docker volume rm -f laravel-build-artifact || true
 	$(PROD_COMPOSE) run --build --rm builder sh -c "ls -l /out"
 	docker run --rm -v laravel-build-artifact:/src -v $(PWD)/dist:/dest alpine sh -c "cp -r /src/. /dest/"
+
+testserver: build
+	$(PROD_COMPOSE) down
+	$(PROD_COMPOSE) up -d --build testserver
+	$(PROD_COMPOSE) exec testserver php artisan migrate --force
+	@echo "✅ Testserver running at http://localhost:8000"

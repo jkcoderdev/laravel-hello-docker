@@ -44,6 +44,8 @@ services:
       dockerfile: ./docker/prod/server/Dockerfile
     environment:
       PHP_VERSION: 8.3
+    volumes:
+      - build-artifact:/var/www
     ports:
       - "8000:80"
     depends_on:
