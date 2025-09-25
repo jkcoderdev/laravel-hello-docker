@@ -13,7 +13,9 @@ Feel free to use and learn from them.
 
 ## Project setup
 
-You need to have Docker installed. If you use Windows, you need to use WSL (Windows Subsystem for Linux).
+Requirements:
+- Linux or Windows with WSL (Windows Subsystem for Linux)
+- Docker CLI and Make tools
 
 ### Development
 
