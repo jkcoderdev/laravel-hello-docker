@@ -53,4 +53,13 @@ RUN rm -rf /out/* && mkdir -p /out
 COPY --from=vendor /app /out/
 COPY --from=assets /app/public /out/public
 
+RUN rm -f phpunit.xml \
+  && rm -f vite.config.js \
+  && rm -f *.sh \
+  && rm -f README.md \
+  && rm -f artisan \
+  && rm -rf tests \
+  && rm -rf node_modules \
+  && rm -rf docker
+
 RUN chown -R 1000:1000 storage bootstrap/cache
